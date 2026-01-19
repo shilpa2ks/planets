@@ -1,0 +1,11 @@
+body {
+  background-color: #070724;
+  background-image: url("./background-stars.svg");
+  font-family: "Spartan", sans-serif;
+  color: white;
+}
+
+h1,
+h2 {
+  font-family: "Antonio", sans-serif;
+}
