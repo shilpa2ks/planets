@@ -1,3 +1,5 @@
+"use client";
+
 import { useCallback, useState } from "react";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
