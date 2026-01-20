@@ -1,93 +1,101 @@
 "use client";
 
-import { useState } from "react";
-import { Typography } from "@mui/material";
+import { useCallback, useState } from "react";
+import React from "react";
 import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
+import Link from "@mui/material/Link";
 import Image from "next/image";
-import List from "@mui/material/List";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
-
-interface IPlanet {
-  name: string;
-  images: {
-    planet: string;
-    internal: string;
-    geology: string;
-  };
-  overview: {
-    content: string;
-  };
-  structure: {
-    content: string;
-  };
-  geology: {
-    content: string;
-  };
-}
+import { IPlanet } from "../types";
+import PlanetaryStats from "../planetary-stats/PlanetaryStats";
+import ListOptions from "./ListOptions";
+import styles from "../styles.module.scss";
+import { normalizeImagePath } from "@/lib/imageUtils";
 
 const PlanetComponent = ({ planet }: { planet: IPlanet }) => {
+  const { imageStyle } = styles;
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const [content, setContent] = useState<string>(planet?.overview?.content);
+  const [source, setSource] = useState<string>(planet?.overview?.source);
   const [image, setImage] = useState<string>(planet?.images?.planet);
 
-  const handleListItemClick = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    index: number
-  ) => {
-    setSelectedIndex(index);
+  const handleListItemClick = useCallback(
+    (event: React.MouseEvent<HTMLDivElement, MouseEvent>, index: number) => {
+      setSelectedIndex(index);
 
-    if (index === 0) {
-      setContent(planet?.overview?.content);
-      setImage(planet?.images?.planet);
-    } else if (index === 1) {
-      setContent(planet?.structure?.content);
-      setImage(planet?.images?.internal);
-    } else if (index === 2) {
-      setContent(planet?.geology?.content);
-      setImage(planet?.images?.geology);
-    } else {
-      setContent(planet?.overview?.content);
-      setImage(planet?.images?.planet);
-    }
-  };
+      if (index === 0) {
+        setContent(planet?.overview?.content);
+        setSource(planet?.overview?.source);
+        setImage(planet?.images?.planet);
+      } else if (index === 1) {
+        setContent(planet?.structure?.content);
+        setSource(planet?.structure?.source);
+        setImage(planet?.images?.internal);
+      } else if (index === 2) {
+        setContent(planet?.geology?.content);
+        setSource(planet?.geology?.source);
+        setImage(planet?.images?.planet);
+      } else {
+        setContent(planet?.overview?.content);
+        setImage(planet?.images?.planet);
+      }
+    },
+    [planet]
+  );
 
   return (
-    <Box
-      display={"flex"}
-      justifyContent={"center"}
-      alignItems={"center"}
-      height="100vh"
-    >
-      <Image src={image} alt={planet.name} width={200} height={200} />
-      <Box ml="10rem" width="400px">
-        <Typography variant="h3">{planet.name}</Typography>
-        <Typography variant="body1" mt="1rem">
-          {content}
-        </Typography>
-        <List component="nav">
-          <ListItemButton
-            selected={selectedIndex === 0}
-            onClick={(event) => handleListItemClick(event, 0)}
-          >
-            <ListItemText primary="OVERVIEW" />
-          </ListItemButton>
-          <ListItemButton
-            selected={selectedIndex === 1}
-            onClick={(event) => handleListItemClick(event, 1)}
-          >
-            <ListItemText primary="INTERNAL STRUCTURE" />
-          </ListItemButton>
-          <ListItemButton
-            selected={selectedIndex === 2}
-            onClick={(event) => handleListItemClick(event, 2)}
-          >
-            <ListItemText primary="SURFACE GEOLOGY" />
-          </ListItemButton>
-        </List>
+    <Container maxWidth="md" sx={{ my: "2rem", height: "100vh" }}>
+      <Box
+        display={"flex"}
+        justifyContent={"space-between"}
+        alignItems={"center"}
+        sx={{ my: "2rem" }}
+      >
+        <Box display={"flex"} flexDirection={"column"} alignItems={"center"}>
+          <Image
+            src={normalizeImagePath(image)}
+            alt={planet.name}
+            width={300}
+            height={300}
+            priority
+          />
+          {selectedIndex !== null && selectedIndex === 2 && (
+            <Image
+              src={normalizeImagePath(planet?.images?.geology)}
+              alt={planet.name}
+              width={180}
+              height={180}
+              className={imageStyle}
+            />
+          )}
+        </Box>
+        <Box width={"30vw"}>
+          <Typography variant="h1">{planet.name}</Typography>
+          <Typography variant="body1" mt="1rem">
+            {content}
+          </Typography>
+          <Typography variant="body1" mt="1rem">
+            Source: <Link href={source}>Wikipedia</Link>
+          </Typography>
+          <ListOptions
+            selectedIndex={selectedIndex}
+            handleListItemClick={handleListItemClick}
+          />
+        </Box>
       </Box>
-    </Box>
+      <Box
+        display={"flex"}
+        justifyContent={"space-between"}
+        sx={{ my: "2rem" }}
+      >
+        <PlanetaryStats name={"rotation time"} data={planet.rotation} />
+        <PlanetaryStats name={"revolution time"} data={planet.revolution} />
+        <PlanetaryStats name={"radius"} data={planet.radius} />
+        <PlanetaryStats name={"Average temp."} data={planet.temperature} />
+      </Box>
+    </Container>
   );
 };
 
-export default PlanetComponent;
+export default React.memo(PlanetComponent);

@@ -12,10 +12,10 @@ const Nav = () => {
       alignItems={"center"}
       padding={"1rem"}
       sx={{
-        borderBottom: " 1px solid rgba(255, 255, 255, 0.45)",
+        borderBottom: " 1px solid rgba(255, 255, 255, 0.26)",
       }}
     >
-      <Typography variant="h1" sx={{ fontSize: "2rem", fontWeight: "800" }}>
+      <Typography variant="h1" sx={{ fontSize: "2rem" }}>
         Planet Facts
       </Typography>
       <Box display={"flex"} gap={"1rem"}>
@@ -31,4 +31,4 @@ const Nav = () => {
   );
 };
 
-export default Nav;
+export default React.memo(Nav);

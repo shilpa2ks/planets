@@ -1,6 +1,6 @@
 body {
   background-color: #070724;
-  background-image: url("./background-stars.svg");
+  background-image: url("/background-stars.svg");
   font-family: "Spartan", sans-serif;
   color: white;
 }

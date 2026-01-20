@@ -1,9 +1,16 @@
 import Link from "next/link";
 import React from "react";
-import { NavLinkProps } from "./types";
+import { NavLinkProps } from "../types";
+import styles from "../styles.module.scss";
+
+const { linkStyle } = styles;
 
 const NavLink = ({ planetId, planetName }: NavLinkProps) => {
-  return <Link href={planetId}>{planetName.toUpperCase()}</Link>;
+  return (
+    <Link href={planetId} className={linkStyle} prefetch={true}>
+      {planetName.toUpperCase()}
+    </Link>
+  );
 };
 
-export default NavLink;
+export default React.memo(NavLink);
