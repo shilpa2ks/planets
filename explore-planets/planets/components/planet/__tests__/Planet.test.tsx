@@ -36,6 +36,7 @@ jest.mock("../ListOptions", () => {
 });
 
 const mockPlanet: IPlanet = {
+  id: "0",
   name: "Mercury",
   images: {
     planet: "./assets/planet-mercury.svg",
@@ -71,7 +72,7 @@ describe("Planet Component", () => {
     render(<PlanetComponent planet={mockPlanet} />);
 
     expect(
-      screen.getByText("Mercury is the smallest planet.")
+      screen.getByText("Mercury is the smallest planet."),
     ).toBeInTheDocument();
   });
 
@@ -98,7 +99,7 @@ describe("Planet Component", () => {
     fireEvent.click(structureButton);
 
     expect(
-      screen.getByText("Mercury has a solid silicate crust.")
+      screen.getByText("Mercury has a solid silicate crust."),
     ).toBeInTheDocument();
   });
 
@@ -109,7 +110,7 @@ describe("Planet Component", () => {
     fireEvent.click(geologyButton);
 
     expect(
-      screen.getByText("Mercury's surface is similar to the Moon.")
+      screen.getByText("Mercury's surface is similar to the Moon."),
     ).toBeInTheDocument();
   });
 

@@ -11,21 +11,29 @@ import { IPlanet } from "../types";
 import PlanetaryStats from "../planetary-stats/PlanetaryStats";
 import ListOptions from "./ListOptions";
 import styles from "../styles.module.scss";
-import { getDefaultPlanet, getPlanetData } from "@/lib/planetData";
+import { planets } from "@/data/planets";
 
 const PlanetComponent = ({ planet }: { planet?: IPlanet }) => {
-  const defaultPlanet = planet || getDefaultPlanet();
+  const defaultPlanet = planet || planets[0] || null;
+
+  if (!defaultPlanet) {
+    return (
+      <Container maxWidth="md" sx={{ my: "2rem", height: "100vh" }}>
+        <Typography>No planet data available</Typography>
+      </Container>
+    );
+  }
 
   const { imageStyle } = styles;
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const [content, setContent] = useState<string>(
-    defaultPlanet?.overview?.content || "",
+    defaultPlanet.overview?.content || "",
   );
   const [source, setSource] = useState<string>(
-    defaultPlanet?.overview?.source || "",
+    defaultPlanet.overview?.source || "",
   );
   const [image, setImage] = useState<string>(
-    defaultPlanet?.images?.planet || "",
+    defaultPlanet.images?.planet || "",
   );
 
   const handleListItemClick = useCallback(
@@ -33,20 +41,20 @@ const PlanetComponent = ({ planet }: { planet?: IPlanet }) => {
       setSelectedIndex(index);
 
       if (index === 0) {
-        setContent(defaultPlanet?.overview?.content || "");
-        setSource(defaultPlanet?.overview?.source || "");
-        setImage(defaultPlanet?.images?.planet || "");
+        setContent(defaultPlanet.overview?.content || "");
+        setSource(defaultPlanet.overview?.source || "");
+        setImage(defaultPlanet.images?.planet || "");
       } else if (index === 1) {
-        setContent(defaultPlanet?.structure?.content || "");
-        setSource(defaultPlanet?.structure?.source || "");
-        setImage(defaultPlanet?.images?.internal || "");
+        setContent(defaultPlanet.structure?.content || "");
+        setSource(defaultPlanet.structure?.source || "");
+        setImage(defaultPlanet.images?.internal || "");
       } else if (index === 2) {
-        setContent(defaultPlanet?.geology?.content || "");
-        setSource(defaultPlanet?.geology?.source || "");
-        setImage(defaultPlanet?.images?.planet || "");
+        setContent(defaultPlanet.geology?.content || "");
+        setSource(defaultPlanet.geology?.source || "");
+        setImage(defaultPlanet.images?.planet || "");
       } else {
-        setContent(defaultPlanet?.overview?.content || "");
-        setImage(defaultPlanet?.images?.planet || "");
+        setContent(defaultPlanet.overview?.content || "");
+        setImage(defaultPlanet.images?.planet || "");
       }
     },
     [defaultPlanet],
@@ -63,15 +71,15 @@ const PlanetComponent = ({ planet }: { planet?: IPlanet }) => {
         <Box display={"flex"} flexDirection={"column"} alignItems={"center"}>
           <Image
             src={image}
-            alt={defaultPlanet?.name || "Planet"}
+            alt={defaultPlanet.name || "Planet"}
             width={300}
             height={300}
             priority
           />
           {selectedIndex !== null && selectedIndex === 2 && (
             <Image
-              src={defaultPlanet?.images?.geology || ""}
-              alt={defaultPlanet?.name || "Planet"}
+              src={defaultPlanet.images?.geology || ""}
+              alt={defaultPlanet.name || "Planet"}
               width={180}
               height={180}
               className={imageStyle}
@@ -80,9 +88,7 @@ const PlanetComponent = ({ planet }: { planet?: IPlanet }) => {
           )}
         </Box>
         <Box width={"30vw"}>
-          <Typography variant="h1">
-            {defaultPlanet?.name || "Planet"}
-          </Typography>
+          <Typography variant="h1">{defaultPlanet.name}</Typography>
           <Typography variant="body1" mt="1rem">
             {content}
           </Typography>
@@ -102,16 +108,16 @@ const PlanetComponent = ({ planet }: { planet?: IPlanet }) => {
       >
         <PlanetaryStats
           name={"rotation time"}
-          data={defaultPlanet?.rotation || ""}
+          data={defaultPlanet.rotation || ""}
         />
         <PlanetaryStats
           name={"revolution time"}
-          data={defaultPlanet?.revolution || ""}
+          data={defaultPlanet.revolution || ""}
         />
-        <PlanetaryStats name={"radius"} data={defaultPlanet?.radius || ""} />
+        <PlanetaryStats name={"radius"} data={defaultPlanet.radius || ""} />
         <PlanetaryStats
           name={"Average temp."}
-          data={defaultPlanet?.temperature || ""}
+          data={defaultPlanet.temperature || ""}
         />
       </Box>
     </Container>

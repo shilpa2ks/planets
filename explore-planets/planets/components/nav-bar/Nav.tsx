@@ -1,15 +1,12 @@
 "use client";
 
-import React, { useMemo } from "react";
+import React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import NavLink from "./NavLink";
-import { getPlanetData } from "@/lib/planetData";
-import { IPlanet } from "../types";
+import { planets } from "@/data/planets";
 
 const Nav = () => {
-  const data = useMemo(() => getPlanetData() as IPlanet[], []);
-
   return (
     <Box
       display={"flex"}
@@ -24,20 +21,16 @@ const Nav = () => {
         Planet Facts
       </Typography>
       <Box display={"flex"} gap={"1rem"}>
-        {Array.isArray(data) ? (
-          data.map((planet: IPlanet) => (
-            <NavLink
-              key={planet.id}
-              planetId={planet.id}
-              planetName={planet.name}
-            />
-          ))
-        ) : (
-          <Typography>Loading planets...</Typography>
-        )}
+        {planets.map((planet) => (
+          <NavLink
+            key={planet.id}
+            planetId={planet.id}
+            planetName={planet.name}
+          />
+        ))}
       </Box>
     </Box>
   );
 };
 
-export default React.memo(Nav);
+export default Nav;
