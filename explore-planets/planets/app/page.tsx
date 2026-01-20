@@ -1,3 +1,5 @@
+"use client";
+
 import Nav from "@/components/nav-bar/Nav";
 import Box from "@mui/material/Box";
 import PlanetComponent from "@/components/planet/Planet";

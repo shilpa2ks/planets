@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import { NavLinkProps } from "../types";
 import styles from "../styles.module.scss";

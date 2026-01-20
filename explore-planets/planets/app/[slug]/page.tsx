@@ -6,11 +6,18 @@ import PlanetComponent from "@/components/planet/Planet";
 
 const Planet = ({ params }: { params: { slug: string } }) => {
   const { slug } = params;
-  const planet = planets[Number(slug)];
 
-  console.log("[slug]/page - slug:", slug);
+  // Safely access planet and ensure it's valid
+  const planetIndex = Number(slug);
+  const planet =
+    !isNaN(planetIndex) && planets[planetIndex]
+      ? planets[planetIndex]
+      : planets[0];
+
+  console.log("[slug]/page - slug:", slug, "index:", planetIndex);
   console.log("[slug]/page - planet:", planet);
   console.log("[slug]/page - planet type:", typeof planet);
+  console.log("[slug]/page - planets array:", planets);
 
   return (
     <Box>
