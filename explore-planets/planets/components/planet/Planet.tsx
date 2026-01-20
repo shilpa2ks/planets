@@ -15,11 +15,6 @@ import { planets } from "@/data/planets";
 const PlanetComponent = ({ planet }: { planet?: IPlanet }) => {
   const defaultPlanet = planet || planets[0] || null;
 
-  // Debug logging for production
-  console.log("PlanetComponent - planet:", planet);
-  console.log("PlanetComponent - defaultPlanet:", defaultPlanet);
-  console.log("PlanetComponent - planets[0]:", planets[0]);
-
   if (!defaultPlanet) {
     return (
       <Container maxWidth="md" sx={{ my: "2rem", height: "100vh" }}>

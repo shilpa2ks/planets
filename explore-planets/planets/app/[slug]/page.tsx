@@ -14,11 +14,6 @@ const Planet = ({ params }: { params: { slug: string } }) => {
       ? planets[planetIndex]
       : planets[0];
 
-  console.log("[slug]/page - slug:", slug, "index:", planetIndex);
-  console.log("[slug]/page - planet:", planet);
-  console.log("[slug]/page - planet type:", typeof planet);
-  console.log("[slug]/page - planets array:", planets);
-
   return (
     <Box>
       <Nav />

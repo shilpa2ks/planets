@@ -6,15 +6,6 @@ const PlanetaryStats = ({ name, data }: PlanetaryStatsProps) => {
   // Extra safety: ensure data is always a primitive string
   const safeData = String(data ?? "");
 
-  console.log(
-    "PlanetaryStats - name:",
-    name,
-    "data:",
-    data,
-    "type:",
-    typeof data,
-  );
-
   return (
     <Box
       p="1rem"
