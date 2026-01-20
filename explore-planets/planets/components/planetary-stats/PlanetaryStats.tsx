@@ -1,7 +1,6 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { PlanetaryStatsProps } from "../types";
-import React from "react";
 
 const PlanetaryStats = ({ name, data }: PlanetaryStatsProps) => {
   // Extra safety: ensure data is always a primitive string
@@ -37,4 +36,4 @@ const PlanetaryStats = ({ name, data }: PlanetaryStatsProps) => {
   );
 };
 
-export default React.memo(PlanetaryStats);
+export default PlanetaryStats;

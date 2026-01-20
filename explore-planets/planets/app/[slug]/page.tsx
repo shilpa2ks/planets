@@ -4,8 +4,8 @@ import Box from "@mui/material/Box";
 import Nav from "@/components/nav-bar/Nav";
 import PlanetComponent from "@/components/planet/Planet";
 
-const Planet = async ({ params }: { params: Promise<{ slug: string }> }) => {
-  const { slug } = await params;
+const Planet = ({ params }: { params: { slug: string } }) => {
+  const { slug } = params;
   const planet = planets[Number(slug)];
 
   console.log("[slug]/page - slug:", slug);

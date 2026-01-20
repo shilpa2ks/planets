@@ -1,7 +1,6 @@
 "use client";
 
 import { useCallback, useState } from "react";
-import React from "react";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
@@ -134,4 +133,4 @@ const PlanetComponent = ({ planet }: { planet?: IPlanet }) => {
   );
 };
 
-export default React.memo(PlanetComponent);
+export default PlanetComponent;

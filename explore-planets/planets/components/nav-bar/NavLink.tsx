@@ -1,5 +1,6 @@
+"use client";
+
 import Link from "next/link";
-import React from "react";
 import { NavLinkProps } from "../types";
 import styles from "../styles.module.scss";
 
@@ -9,11 +10,13 @@ const NavLink = ({ planetId, planetName }: NavLinkProps) => {
   console.log("NavLink - planetId:", planetId, "type:", typeof planetId);
   console.log("NavLink - planetName:", planetName, "type:", typeof planetName);
 
+  const href = `/${planetId}`;
+
   return (
-    <Link href={planetId} className={linkStyle} prefetch={true}>
+    <Link href={href} className={linkStyle} prefetch={true}>
       {String(planetName).toUpperCase()}
     </Link>
   );
 };
 
-export default React.memo(NavLink);
+export default NavLink;
