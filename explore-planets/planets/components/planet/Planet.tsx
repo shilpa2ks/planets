@@ -12,37 +12,45 @@ import { IPlanet } from "../types";
 import PlanetaryStats from "../planetary-stats/PlanetaryStats";
 import ListOptions from "./ListOptions";
 import styles from "../styles.module.scss";
-const data = dataJson as any[];
-const planetData: IPlanet = data[0];
-const PlanetComponent = ({ planet = planetData }: { planet?: IPlanet }) => {
+
+const PlanetComponent = ({ planet }: { planet?: IPlanet }) => {
+  const data = (dataJson as any[]) || [];
+  const defaultPlanet = planet || data[0];
+
   const { imageStyle } = styles;
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
-  const [content, setContent] = useState<string>(planet.overview.content);
-  const [source, setSource] = useState<string>(planet.overview.source);
-  const [image, setImage] = useState<string>(planet.images.planet);
+  const [content, setContent] = useState<string>(
+    defaultPlanet?.overview?.content || "",
+  );
+  const [source, setSource] = useState<string>(
+    defaultPlanet?.overview?.source || "",
+  );
+  const [image, setImage] = useState<string>(
+    defaultPlanet?.images?.planet || "",
+  );
 
   const handleListItemClick = useCallback(
     (event: React.MouseEvent<HTMLDivElement, MouseEvent>, index: number) => {
       setSelectedIndex(index);
 
       if (index === 0) {
-        setContent(planet?.overview?.content);
-        setSource(planet?.overview?.source);
-        setImage(planet?.images?.planet);
+        setContent(defaultPlanet?.overview?.content || "");
+        setSource(defaultPlanet?.overview?.source || "");
+        setImage(defaultPlanet?.images?.planet || "");
       } else if (index === 1) {
-        setContent(planet?.structure?.content);
-        setSource(planet?.structure?.source);
-        setImage(planet?.images?.internal);
+        setContent(defaultPlanet?.structure?.content || "");
+        setSource(defaultPlanet?.structure?.source || "");
+        setImage(defaultPlanet?.images?.internal || "");
       } else if (index === 2) {
-        setContent(planet?.geology?.content);
-        setSource(planet?.geology?.source);
-        setImage(planet?.images?.planet);
+        setContent(defaultPlanet?.geology?.content || "");
+        setSource(defaultPlanet?.geology?.source || "");
+        setImage(defaultPlanet?.images?.planet || "");
       } else {
-        setContent(planet?.overview?.content);
-        setImage(planet?.images?.planet);
+        setContent(defaultPlanet?.overview?.content || "");
+        setImage(defaultPlanet?.images?.planet || "");
       }
     },
-    [planet],
+    [defaultPlanet],
   );
 
   return (
@@ -56,15 +64,15 @@ const PlanetComponent = ({ planet = planetData }: { planet?: IPlanet }) => {
         <Box display={"flex"} flexDirection={"column"} alignItems={"center"}>
           <Image
             src={image}
-            alt={planet.name}
+            alt={defaultPlanet?.name || "Planet"}
             width={300}
             height={300}
             priority
           />
           {selectedIndex !== null && selectedIndex === 2 && (
             <Image
-              src={planet?.images?.geology}
-              alt={planet.name}
+              src={defaultPlanet?.images?.geology || ""}
+              alt={defaultPlanet?.name || "Planet"}
               width={180}
               height={180}
               className={imageStyle}
@@ -73,7 +81,9 @@ const PlanetComponent = ({ planet = planetData }: { planet?: IPlanet }) => {
           )}
         </Box>
         <Box width={"30vw"}>
-          <Typography variant="h1">{planet.name}</Typography>
+          <Typography variant="h1">
+            {defaultPlanet?.name || "Planet"}
+          </Typography>
           <Typography variant="body1" mt="1rem">
             {content}
           </Typography>
@@ -91,10 +101,19 @@ const PlanetComponent = ({ planet = planetData }: { planet?: IPlanet }) => {
         justifyContent={"space-between"}
         sx={{ my: "2rem" }}
       >
-        <PlanetaryStats name={"rotation time"} data={planet.rotation} />
-        <PlanetaryStats name={"revolution time"} data={planet.revolution} />
-        <PlanetaryStats name={"radius"} data={planet.radius} />
-        <PlanetaryStats name={"Average temp."} data={planet.temperature} />
+        <PlanetaryStats
+          name={"rotation time"}
+          data={defaultPlanet?.rotation || ""}
+        />
+        <PlanetaryStats
+          name={"revolution time"}
+          data={defaultPlanet?.revolution || ""}
+        />
+        <PlanetaryStats name={"radius"} data={defaultPlanet?.radius || ""} />
+        <PlanetaryStats
+          name={"Average temp."}
+          data={defaultPlanet?.temperature || ""}
+        />
       </Box>
     </Container>
   );
