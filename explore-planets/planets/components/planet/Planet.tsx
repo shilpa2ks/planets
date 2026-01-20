@@ -6,18 +6,20 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
+import data from "@/data/data.json";
 import Image from "next/image";
 import { IPlanet } from "../types";
 import PlanetaryStats from "../planetary-stats/PlanetaryStats";
 import ListOptions from "./ListOptions";
 import styles from "../styles.module.scss";
 
-const PlanetComponent = ({ planet }: { planet: IPlanet }) => {
+const planetData: IPlanet = data[0];
+const PlanetComponent = ({ planet = planetData }: { planet?: IPlanet }) => {
   const { imageStyle } = styles;
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
-  const [content, setContent] = useState<string>(planet?.overview?.content);
-  const [source, setSource] = useState<string>(planet?.overview?.source);
-  const [image, setImage] = useState<string>(planet?.images?.planet);
+  const [content, setContent] = useState<string>(planet.overview.content);
+  const [source, setSource] = useState<string>(planet.overview.source);
+  const [image, setImage] = useState<string>(planet.images.planet);
 
   const handleListItemClick = useCallback(
     (event: React.MouseEvent<HTMLDivElement, MouseEvent>, index: number) => {
