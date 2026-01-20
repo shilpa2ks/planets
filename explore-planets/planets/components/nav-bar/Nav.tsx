@@ -1,8 +1,10 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import data from "../../data/data.json";
+import dataJson from "../../data/data.json";
 import NavLink from "./NavLink";
+
+const data = dataJson as any[];
 
 const Nav = () => {
   return (
