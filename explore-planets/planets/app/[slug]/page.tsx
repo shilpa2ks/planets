@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { planets } from "@/data/planets";
 import Box from "@mui/material/Box";
@@ -6,8 +8,6 @@ import PlanetComponent from "@/components/planet/Planet";
 
 const Planet = ({ params }: { params: { slug: string } }) => {
   const { slug } = params;
-
-  // Safely access planet and ensure it's valid
   const planetIndex = Number(slug);
   const planet =
     !isNaN(planetIndex) && planets[planetIndex]
