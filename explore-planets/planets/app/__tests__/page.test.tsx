@@ -15,34 +15,36 @@ jest.mock("@/components/planet/Planet", () => {
   };
 });
 
-// Mock data
-jest.mock("@/data/data.json", () => [
-  {
-    id: "0",
-    name: "Mercury",
-    images: {
-      planet: "./assets/planet-mercury.svg",
-      internal: "./assets/planet-mercury-internal.svg",
-      geology: "./assets/geology-mercury.png",
+// Mock planets data
+jest.mock("@/data/planets", () => ({
+  planets: [
+    {
+      id: "0",
+      name: "Mercury",
+      images: {
+        planet: "./assets/planet-mercury.svg",
+        internal: "./assets/planet-mercury-internal.svg",
+        geology: "./assets/geology-mercury.png",
+      },
+      overview: {
+        content: "Mercury is the smallest planet.",
+        source: "https://en.wikipedia.org/wiki/Mercury",
+      },
+      structure: {
+        content: "Mercury has a structure...",
+        source: "https://example.com",
+      },
+      geology: {
+        content: "Mercury has geology...",
+        source: "https://example.com",
+      },
+      rotation: "58.6 Days",
+      revolution: "87.97 Days",
+      radius: "2,439.7 KM",
+      temperature: "430°c",
     },
-    overview: {
-      content: "Mercury is the smallest planet.",
-      source: "https://en.wikipedia.org/wiki/Mercury",
-    },
-    structure: {
-      content: "Mercury has a structure...",
-      source: "https://example.com",
-    },
-    geology: {
-      content: "Mercury has geology...",
-      source: "https://example.com",
-    },
-    rotation: "58.6 Days",
-    revolution: "87.97 Days",
-    radius: "2,439.7 KM",
-    temperature: "430°c",
-  },
-]);
+  ],
+}));
 
 describe("Home Page", () => {
   it("renders the Nav component", () => {

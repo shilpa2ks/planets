@@ -1,12 +1,12 @@
 import React from "react";
-import data from "@/data/data.json";
+import { planets } from "@/data/planets";
 import Box from "@mui/material/Box";
 import Nav from "@/components/nav-bar/Nav";
 import PlanetComponent from "@/components/planet/Planet";
 
 const Planet = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const { slug } = await params;
-  const planet = data[Number(slug)];
+  const planet = planets[Number(slug)];
 
   return (
     <Box>
