@@ -1,15 +1,14 @@
 import Link from "next/link";
-import { NavLinkProps } from "../types";
-import styles from "../styles.module.scss";
+import styles from "./styles.module.scss";
 
 const { linkStyle } = styles;
 
-const NavLink = ({ planetId, planetName }: NavLinkProps) => {
-  const href = `/${planetId}`;
+const NavLink = ({ planetName }: { planetName: string }): JSX.Element => {
+  const href = `/${planetName.toLowerCase()}`;
 
   return (
     <Link href={href} className={linkStyle} prefetch={true}>
-      {String(planetName).toUpperCase()}
+      {planetName.toUpperCase()}
     </Link>
   );
 };

@@ -4,7 +4,7 @@ import Typography from "@mui/material/Typography";
 import NavLink from "./NavLink";
 import { planets } from "@/data/planets";
 
-const Nav = () => {
+const Nav = (): JSX.Element => {
   return (
     <Box
       display={"flex"}
@@ -20,13 +20,7 @@ const Nav = () => {
       </Typography>
       <Box display={"flex"} gap={"1rem"}>
         {planets.map((planet) => {
-          return (
-            <NavLink
-              key={planet.id}
-              planetId={planet.id}
-              planetName={planet.name}
-            />
-          );
+          return <NavLink key={planet.id} planetName={planet.name} />;
         })}
       </Box>
     </Box>

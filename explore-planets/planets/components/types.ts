@@ -1,8 +1,3 @@
-export interface NavLinkProps {
-  planetId: string;
-  planetName: string;
-}
-
 interface PlanetDetailProps {
   content: string;
   source: string;

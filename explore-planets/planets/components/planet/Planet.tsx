@@ -9,10 +9,10 @@ import Image from "next/image";
 import { IPlanet } from "../types";
 import PlanetaryStats from "../planetary-stats/PlanetaryStats";
 import ListOptions from "./ListOptions";
-import styles from "../styles.module.scss";
+import styles from "./styles.module.scss";
 import { planets } from "@/data/planets";
 
-const PlanetComponent = ({ planet }: { planet?: IPlanet }) => {
+const PlanetComponent = ({ planet }: { planet?: IPlanet }): JSX.Element => {
   const defaultPlanet = planet || planets[0] || null;
 
   if (!defaultPlanet) {
@@ -26,36 +26,31 @@ const PlanetComponent = ({ planet }: { planet?: IPlanet }) => {
   const { imageStyle } = styles;
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
 
-  // Ensure all state values are strings
   const [content, setContent] = useState<string>(
-    String(defaultPlanet.overview?.content || ""),
+    defaultPlanet.overview?.content,
   );
-  const [source, setSource] = useState<string>(
-    String(defaultPlanet.overview?.source || ""),
-  );
-  const [image, setImage] = useState<string>(
-    String(defaultPlanet.images?.planet || ""),
-  );
+  const [source, setSource] = useState<string>(defaultPlanet.overview?.source);
+  const [image, setImage] = useState<string>(defaultPlanet.images?.planet);
 
   const handleListItemClick = useCallback(
     (event: React.MouseEvent<HTMLDivElement, MouseEvent>, index: number) => {
       setSelectedIndex(index);
 
       if (index === 0) {
-        setContent(String(defaultPlanet.overview?.content || ""));
-        setSource(String(defaultPlanet.overview?.source || ""));
-        setImage(String(defaultPlanet.images?.planet || ""));
+        setContent(defaultPlanet.overview?.content);
+        setSource(defaultPlanet.overview?.source);
+        setImage(defaultPlanet.images?.planet);
       } else if (index === 1) {
-        setContent(String(defaultPlanet.structure?.content || ""));
-        setSource(String(defaultPlanet.structure?.source || ""));
-        setImage(String(defaultPlanet.images?.internal || ""));
+        setContent(defaultPlanet.structure?.content);
+        setSource(defaultPlanet.structure?.source);
+        setImage(defaultPlanet.images?.internal);
       } else if (index === 2) {
-        setContent(String(defaultPlanet.geology?.content || ""));
-        setSource(String(defaultPlanet.geology?.source || ""));
-        setImage(String(defaultPlanet.images?.planet || ""));
+        setContent(defaultPlanet.geology?.content);
+        setSource(defaultPlanet.geology?.source);
+        setImage(defaultPlanet.images?.planet);
       } else {
-        setContent(String(defaultPlanet.overview?.content || ""));
-        setImage(String(defaultPlanet.images?.planet || ""));
+        setContent(defaultPlanet.overview?.content);
+        setImage(defaultPlanet.images?.planet);
       }
     },
     [defaultPlanet],
@@ -72,15 +67,15 @@ const PlanetComponent = ({ planet }: { planet?: IPlanet }) => {
         <Box display={"flex"} flexDirection={"column"} alignItems={"center"}>
           <Image
             src={image}
-            alt={defaultPlanet.name || "Planet"}
+            alt={defaultPlanet.name}
             width={300}
             height={300}
             priority
           />
           {selectedIndex !== null && selectedIndex === 2 && (
             <Image
-              src={defaultPlanet.images?.geology || ""}
-              alt={defaultPlanet.name || "Planet"}
+              src={defaultPlanet.images?.geology}
+              alt={defaultPlanet.name}
               width={180}
               height={180}
               className={imageStyle}
@@ -107,21 +102,15 @@ const PlanetComponent = ({ planet }: { planet?: IPlanet }) => {
         justifyContent={"space-between"}
         sx={{ my: "2rem" }}
       >
-        <PlanetaryStats
-          name={"rotation time"}
-          data={String(defaultPlanet.rotation || "")}
-        />
+        <PlanetaryStats name={"rotation time"} data={defaultPlanet.rotation} />
         <PlanetaryStats
           name={"revolution time"}
-          data={String(defaultPlanet.revolution || "")}
+          data={defaultPlanet.revolution}
         />
-        <PlanetaryStats
-          name={"radius"}
-          data={String(defaultPlanet.radius || "")}
-        />
+        <PlanetaryStats name={"radius"} data={defaultPlanet.radius} />
         <PlanetaryStats
           name={"Average temp."}
-          data={String(defaultPlanet.temperature || "")}
+          data={defaultPlanet.temperature}
         />
       </Box>
     </Container>

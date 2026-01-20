@@ -2,10 +2,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { PlanetaryStatsProps } from "../types";
 
-const PlanetaryStats = ({ name, data }: PlanetaryStatsProps) => {
-  // Extra safety: ensure data is always a primitive string
-  const safeData = String(data ?? "");
-
+const PlanetaryStats = ({ name, data }: PlanetaryStatsProps): JSX.Element => {
   return (
     <Box
       p="1rem"
@@ -21,7 +18,7 @@ const PlanetaryStats = ({ name, data }: PlanetaryStatsProps) => {
         {name.toUpperCase()}
       </Typography>
       <Typography fontSize={"1.5rem"} fontWeight={"800"}>
-        {safeData}
+        {data}
       </Typography>
     </Box>
   );

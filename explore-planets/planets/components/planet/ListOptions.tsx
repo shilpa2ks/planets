@@ -6,7 +6,7 @@ import { ListOptionsProps } from "../types";
 const ListOptions = ({
   selectedIndex,
   handleListItemClick,
-}: ListOptionsProps) => {
+}: ListOptionsProps): JSX.Element => {
   return (
     <List
       component="nav"
