@@ -1,8 +1,8 @@
 import React from "react";
 import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 import data from "../../data/data.json";
 import NavLink from "./NavLink";
-import { Typography } from "@mui/material";
 
 const Nav = () => {
   return (
