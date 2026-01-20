@@ -11,7 +11,6 @@ import { IPlanet } from "../types";
 import PlanetaryStats from "../planetary-stats/PlanetaryStats";
 import ListOptions from "./ListOptions";
 import styles from "../styles.module.scss";
-import { normalizeImagePath } from "@/lib/imageUtils";
 
 const PlanetComponent = ({ planet }: { planet: IPlanet }) => {
   const { imageStyle } = styles;
@@ -41,7 +40,7 @@ const PlanetComponent = ({ planet }: { planet: IPlanet }) => {
         setImage(planet?.images?.planet);
       }
     },
-    [planet]
+    [planet],
   );
 
   return (
@@ -54,7 +53,7 @@ const PlanetComponent = ({ planet }: { planet: IPlanet }) => {
       >
         <Box display={"flex"} flexDirection={"column"} alignItems={"center"}>
           <Image
-            src={normalizeImagePath(image)}
+            src={image}
             alt={planet.name}
             width={300}
             height={300}
@@ -62,11 +61,12 @@ const PlanetComponent = ({ planet }: { planet: IPlanet }) => {
           />
           {selectedIndex !== null && selectedIndex === 2 && (
             <Image
-              src={normalizeImagePath(planet?.images?.geology)}
+              src={planet?.images?.geology}
               alt={planet.name}
               width={180}
               height={180}
               className={imageStyle}
+              loading="lazy"
             />
           )}
         </Box>
