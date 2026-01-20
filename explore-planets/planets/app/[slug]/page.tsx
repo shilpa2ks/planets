@@ -8,6 +8,10 @@ const Planet = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const { slug } = await params;
   const planet = planets[Number(slug)];
 
+  console.log("[slug]/page - slug:", slug);
+  console.log("[slug]/page - planet:", planet);
+  console.log("[slug]/page - planet type:", typeof planet);
+
   return (
     <Box>
       <Nav />

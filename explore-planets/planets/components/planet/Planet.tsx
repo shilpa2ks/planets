@@ -16,6 +16,11 @@ import { planets } from "@/data/planets";
 const PlanetComponent = ({ planet }: { planet?: IPlanet }) => {
   const defaultPlanet = planet || planets[0] || null;
 
+  // Debug logging for production
+  console.log("PlanetComponent - planet:", planet);
+  console.log("PlanetComponent - defaultPlanet:", defaultPlanet);
+  console.log("PlanetComponent - planets[0]:", planets[0]);
+
   if (!defaultPlanet) {
     return (
       <Container maxWidth="md" sx={{ my: "2rem", height: "100vh" }}>
@@ -26,14 +31,16 @@ const PlanetComponent = ({ planet }: { planet?: IPlanet }) => {
 
   const { imageStyle } = styles;
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
+
+  // Ensure all state values are strings
   const [content, setContent] = useState<string>(
-    defaultPlanet.overview?.content || "",
+    String(defaultPlanet.overview?.content || ""),
   );
   const [source, setSource] = useState<string>(
-    defaultPlanet.overview?.source || "",
+    String(defaultPlanet.overview?.source || ""),
   );
   const [image, setImage] = useState<string>(
-    defaultPlanet.images?.planet || "",
+    String(defaultPlanet.images?.planet || ""),
   );
 
   const handleListItemClick = useCallback(
@@ -41,20 +48,20 @@ const PlanetComponent = ({ planet }: { planet?: IPlanet }) => {
       setSelectedIndex(index);
 
       if (index === 0) {
-        setContent(defaultPlanet.overview?.content || "");
-        setSource(defaultPlanet.overview?.source || "");
-        setImage(defaultPlanet.images?.planet || "");
+        setContent(String(defaultPlanet.overview?.content || ""));
+        setSource(String(defaultPlanet.overview?.source || ""));
+        setImage(String(defaultPlanet.images?.planet || ""));
       } else if (index === 1) {
-        setContent(defaultPlanet.structure?.content || "");
-        setSource(defaultPlanet.structure?.source || "");
-        setImage(defaultPlanet.images?.internal || "");
+        setContent(String(defaultPlanet.structure?.content || ""));
+        setSource(String(defaultPlanet.structure?.source || ""));
+        setImage(String(defaultPlanet.images?.internal || ""));
       } else if (index === 2) {
-        setContent(defaultPlanet.geology?.content || "");
-        setSource(defaultPlanet.geology?.source || "");
-        setImage(defaultPlanet.images?.planet || "");
+        setContent(String(defaultPlanet.geology?.content || ""));
+        setSource(String(defaultPlanet.geology?.source || ""));
+        setImage(String(defaultPlanet.images?.planet || ""));
       } else {
-        setContent(defaultPlanet.overview?.content || "");
-        setImage(defaultPlanet.images?.planet || "");
+        setContent(String(defaultPlanet.overview?.content || ""));
+        setImage(String(defaultPlanet.images?.planet || ""));
       }
     },
     [defaultPlanet],
@@ -108,16 +115,19 @@ const PlanetComponent = ({ planet }: { planet?: IPlanet }) => {
       >
         <PlanetaryStats
           name={"rotation time"}
-          data={defaultPlanet.rotation || ""}
+          data={String(defaultPlanet.rotation || "")}
         />
         <PlanetaryStats
           name={"revolution time"}
-          data={defaultPlanet.revolution || ""}
+          data={String(defaultPlanet.revolution || "")}
         />
-        <PlanetaryStats name={"radius"} data={defaultPlanet.radius || ""} />
+        <PlanetaryStats
+          name={"radius"}
+          data={String(defaultPlanet.radius || "")}
+        />
         <PlanetaryStats
           name={"Average temp."}
-          data={defaultPlanet.temperature || ""}
+          data={String(defaultPlanet.temperature || "")}
         />
       </Box>
     </Container>
