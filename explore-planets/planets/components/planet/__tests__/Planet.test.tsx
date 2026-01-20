@@ -13,11 +13,6 @@ jest.mock("next/image", () => ({
   },
 }));
 
-// Mock the imageUtils
-jest.mock("@/lib/imageUtils", () => ({
-  normalizeImagePath: (path: string) => path.replace("./", "/"),
-}));
-
 // Mock child components
 jest.mock("../../planetary-stats/PlanetaryStats", () => {
   return function DummyPlanetaryStats({ name, data }: any) {
