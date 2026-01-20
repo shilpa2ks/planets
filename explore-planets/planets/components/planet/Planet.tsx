@@ -6,16 +6,15 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
-import dataJson from "@/data/data.json";
 import Image from "next/image";
 import { IPlanet } from "../types";
 import PlanetaryStats from "../planetary-stats/PlanetaryStats";
 import ListOptions from "./ListOptions";
 import styles from "../styles.module.scss";
+import { getDefaultPlanet, getPlanetData } from "@/lib/planetData";
 
 const PlanetComponent = ({ planet }: { planet?: IPlanet }) => {
-  const data = (dataJson as any[]) || [];
-  const defaultPlanet = planet || data[0];
+  const defaultPlanet = planet || getDefaultPlanet();
 
   const { imageStyle } = styles;
   const [selectedIndex, setSelectedIndex] = useState<number>(0);

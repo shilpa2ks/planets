@@ -15,6 +15,7 @@ interface PlanetImageProps {
 }
 
 export interface IPlanet {
+  id: string;
   name: string;
   images: PlanetImageProps;
   overview: PlanetDetailProps;
@@ -30,7 +31,7 @@ export interface ListOptionsProps {
   selectedIndex: number;
   handleListItemClick: (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    index: number
+    index: number,
   ) => void;
 }
 

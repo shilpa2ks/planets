@@ -1,12 +1,15 @@
-import React from "react";
+"use client";
+
+import React, { useMemo } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import dataJson from "../../data/data.json";
 import NavLink from "./NavLink";
-
-const data = dataJson as any[];
+import { getPlanetData } from "@/lib/planetData";
+import { IPlanet } from "../types";
 
 const Nav = () => {
+  const data = useMemo(() => getPlanetData() as IPlanet[], []);
+
   return (
     <Box
       display={"flex"}
@@ -21,13 +24,17 @@ const Nav = () => {
         Planet Facts
       </Typography>
       <Box display={"flex"} gap={"1rem"}>
-        {data.map((planet) => (
-          <NavLink
-            key={planet.id}
-            planetId={planet.id}
-            planetName={planet.name}
-          />
-        ))}
+        {Array.isArray(data) ? (
+          data.map((planet: IPlanet) => (
+            <NavLink
+              key={planet.id}
+              planetId={planet.id}
+              planetName={planet.name}
+            />
+          ))
+        ) : (
+          <Typography>Loading planets...</Typography>
+        )}
       </Box>
     </Box>
   );
