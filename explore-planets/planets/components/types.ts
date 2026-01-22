@@ -12,6 +12,7 @@ interface PlanetImageProps {
 export interface IPlanet {
   id: string;
   name: string;
+  color: string;
   images: PlanetImageProps;
   overview: PlanetDetailProps;
   structure: PlanetDetailProps;
@@ -22,7 +23,8 @@ export interface IPlanet {
   temperature: string;
 }
 
-export interface ListOptionsProps {
+export interface SelectionOptionProps {
+  color: string;
   selectedIndex: number;
   handleListItemClick: (index: number) => void;
 }
@@ -30,4 +32,11 @@ export interface ListOptionsProps {
 export interface PlanetaryStatsProps {
   name: string;
   data: string;
+}
+
+export interface PlanetDisplayState {
+  selectedIndex: number;
+  content: string;
+  source: string;
+  image: string;
 }

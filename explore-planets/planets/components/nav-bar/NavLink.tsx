@@ -1,9 +1,10 @@
+import { memo } from "react";
 import Link from "next/link";
 import styles from "./styles.module.scss";
 
 const { linkStyle } = styles;
 
-const NavLink = ({ planetName }: { planetName: string }): JSX.Element => {
+const NavLink = memo(({ planetName }: { planetName: string }): JSX.Element => {
   const href = `/${planetName.toLowerCase()}`;
 
   return (
@@ -11,6 +12,8 @@ const NavLink = ({ planetName }: { planetName: string }): JSX.Element => {
       {planetName.toUpperCase()}
     </Link>
   );
-};
+});
+
+NavLink.displayName = "NavLink";
 
 export default NavLink;

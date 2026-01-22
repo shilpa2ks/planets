@@ -8,12 +8,13 @@ import Link from "@mui/material/Link";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Image from "next/image";
 import classnames from "classnames";
-import { IPlanet } from "../types";
+import { IPlanet, PlanetDisplayState } from "../types";
 import PlanetaryStats from "../planetary-stats/PlanetaryStats";
 import ListOptions from "./ListOptions";
 import styles from "./styles.module.scss";
 import { planets } from "@/data/planets";
 import ButtonOptions from "./ButtonOptions";
+import { BREAKPOINTS, SELECTION_INDEX } from "../constants";
 
 const PlanetComponent = ({ planet }: { planet?: IPlanet }): JSX.Element => {
   const {
@@ -24,16 +25,21 @@ const PlanetComponent = ({ planet }: { planet?: IPlanet }): JSX.Element => {
     summaryContainer,
     planetContent,
     planetContentBody,
+    planetSource,
+    sourceLinkStyle,
   } = styles;
   const defaultPlanet = planet || planets[0] || null;
-  const [selectedIndex, setSelectedIndex] = useState<number>(0);
-  const [content, setContent] = useState<string>(
-    defaultPlanet.overview?.content,
-  );
-  const [source, setSource] = useState<string>(defaultPlanet.overview?.source);
-  const [image, setImage] = useState<string>(defaultPlanet.images?.planet);
 
-  const isTabletOrBelow = useMediaQuery("(max-width:900px)");
+  const [displayState, setDisplayState] = useState<PlanetDisplayState>({
+    selectedIndex: SELECTION_INDEX.OVERVIEW,
+    content: defaultPlanet.overview?.content,
+    source: defaultPlanet.overview?.source,
+    image: defaultPlanet.images?.planet,
+  });
+
+  const { selectedIndex, content, source, image } = displayState;
+
+  const isTabletOrBelow = useMediaQuery(BREAKPOINTS.TABLET);
 
   if (!defaultPlanet) {
     return (
@@ -45,24 +51,37 @@ const PlanetComponent = ({ planet }: { planet?: IPlanet }): JSX.Element => {
 
   const handleListItemClick = useCallback(
     (index: number) => {
-      setSelectedIndex(index);
+      let newState: PlanetDisplayState;
 
-      if (index === 0) {
-        setContent(defaultPlanet.overview?.content);
-        setSource(defaultPlanet.overview?.source);
-        setImage(defaultPlanet.images?.planet);
-      } else if (index === 1) {
-        setContent(defaultPlanet.structure?.content);
-        setSource(defaultPlanet.structure?.source);
-        setImage(defaultPlanet.images?.internal);
-      } else if (index === 2) {
-        setContent(defaultPlanet.geology?.content);
-        setSource(defaultPlanet.geology?.source);
-        setImage(defaultPlanet.images?.planet);
-      } else {
-        setContent(defaultPlanet.overview?.content);
-        setImage(defaultPlanet.images?.planet);
+      switch (index) {
+        case SELECTION_INDEX.STRUCTURE:
+          newState = {
+            selectedIndex: index,
+            content: defaultPlanet.structure?.content,
+            source: defaultPlanet.structure?.source,
+            image: defaultPlanet.images?.internal,
+          };
+          break;
+        case SELECTION_INDEX.GEOLOGY:
+          newState = {
+            selectedIndex: index,
+            content: defaultPlanet.geology?.content,
+            source: defaultPlanet.geology?.source,
+            image: defaultPlanet.images?.planet,
+          };
+          break;
+        case SELECTION_INDEX.OVERVIEW:
+        default:
+          newState = {
+            selectedIndex: index,
+            content: defaultPlanet.overview?.content,
+            source: defaultPlanet.overview?.source,
+            image: defaultPlanet.images?.planet,
+          };
+          break;
       }
+
+      setDisplayState(newState);
     },
     [defaultPlanet],
   );
@@ -100,19 +119,24 @@ const PlanetComponent = ({ planet }: { planet?: IPlanet }): JSX.Element => {
           >
             {content}
           </Typography>
-          <Typography variant="body1" className={planetContent}>
+          <Typography
+            variant="body1"
+            className={classnames(planetSource, planetContent)}
+          >
             Source:
-            <Link href={source} ml={"5px"}>
+            <Link href={source} className={sourceLinkStyle}>
               Wikipedia
             </Link>
           </Typography>
           {isTabletOrBelow ? (
             <ButtonOptions
+              color={defaultPlanet.color || ""}
               selectedIndex={selectedIndex}
               handleListItemClick={handleListItemClick}
             />
           ) : (
             <ListOptions
+              color={defaultPlanet.color}
               selectedIndex={selectedIndex}
               handleListItemClick={handleListItemClick}
             />

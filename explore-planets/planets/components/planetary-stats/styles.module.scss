@@ -7,6 +7,10 @@
   padding: 1rem;
 }
 
+.planetName {
+  color: rgba(255, 255, 255, 0.26);
+}
+
 @media (min-width: $smBreakpoint) {
   .planetStats {
     display: flex;

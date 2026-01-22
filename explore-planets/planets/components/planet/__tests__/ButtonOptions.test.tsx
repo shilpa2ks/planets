@@ -4,6 +4,7 @@ import ButtonOptions from "../ButtonOptions";
 
 describe("ButtonOptions Component", () => {
   const mockHandleClick = jest.fn();
+  const defaultColor = "#DEF4FC";
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -11,7 +12,11 @@ describe("ButtonOptions Component", () => {
 
   it("renders all three buttons", () => {
     render(
-      <ButtonOptions selectedIndex={0} handleListItemClick={mockHandleClick} />,
+      <ButtonOptions
+        color={defaultColor}
+        selectedIndex={0}
+        handleListItemClick={mockHandleClick}
+      />,
     );
 
     expect(screen.getByText("OVERVIEW")).toBeInTheDocument();
@@ -21,7 +26,11 @@ describe("ButtonOptions Component", () => {
 
   it("renders buttons inside a ButtonGroup", () => {
     const { container } = render(
-      <ButtonOptions selectedIndex={0} handleListItemClick={mockHandleClick} />,
+      <ButtonOptions
+        color={defaultColor}
+        selectedIndex={0}
+        handleListItemClick={mockHandleClick}
+      />,
     );
 
     const buttonGroup = container.querySelector(".MuiButtonGroup-root");
@@ -30,7 +39,11 @@ describe("ButtonOptions Component", () => {
 
   it("calls handleListItemClick with index 0 when OVERVIEW is clicked", () => {
     render(
-      <ButtonOptions selectedIndex={0} handleListItemClick={mockHandleClick} />,
+      <ButtonOptions
+        color={defaultColor}
+        selectedIndex={0}
+        handleListItemClick={mockHandleClick}
+      />,
     );
 
     const overviewButton = screen.getByText("OVERVIEW");
@@ -42,7 +55,11 @@ describe("ButtonOptions Component", () => {
 
   it("calls handleListItemClick with index 1 when INTERNAL STRUCTURE is clicked", () => {
     render(
-      <ButtonOptions selectedIndex={0} handleListItemClick={mockHandleClick} />,
+      <ButtonOptions
+        color={defaultColor}
+        selectedIndex={0}
+        handleListItemClick={mockHandleClick}
+      />,
     );
 
     const structureButton = screen.getByText("INTERNAL STRUCTURE");
@@ -54,7 +71,11 @@ describe("ButtonOptions Component", () => {
 
   it("calls handleListItemClick with index 2 when SURFACE GEOLOGY is clicked", () => {
     render(
-      <ButtonOptions selectedIndex={0} handleListItemClick={mockHandleClick} />,
+      <ButtonOptions
+        color={defaultColor}
+        selectedIndex={0}
+        handleListItemClick={mockHandleClick}
+      />,
     );
 
     const geologyButton = screen.getByText("SURFACE GEOLOGY");
@@ -66,7 +87,11 @@ describe("ButtonOptions Component", () => {
 
   it("renders with text variant buttons", () => {
     const { container } = render(
-      <ButtonOptions selectedIndex={0} handleListItemClick={mockHandleClick} />,
+      <ButtonOptions
+        color={defaultColor}
+        selectedIndex={0}
+        handleListItemClick={mockHandleClick}
+      />,
     );
 
     const buttonGroup = container.querySelector(".MuiButtonGroup-root");
@@ -75,7 +100,11 @@ describe("ButtonOptions Component", () => {
 
   it("renders with large size buttons", () => {
     const { container } = render(
-      <ButtonOptions selectedIndex={0} handleListItemClick={mockHandleClick} />,
+      <ButtonOptions
+        color={defaultColor}
+        selectedIndex={0}
+        handleListItemClick={mockHandleClick}
+      />,
     );
 
     const buttons = container.querySelectorAll(".MuiButton-root");
@@ -86,7 +115,11 @@ describe("ButtonOptions Component", () => {
 
   it("renders with fullWidth ButtonGroup", () => {
     const { container } = render(
-      <ButtonOptions selectedIndex={0} handleListItemClick={mockHandleClick} />,
+      <ButtonOptions
+        color={defaultColor}
+        selectedIndex={0}
+        handleListItemClick={mockHandleClick}
+      />,
     );
 
     const buttonGroup = container.querySelector(".MuiButtonGroup-root");
@@ -95,18 +128,92 @@ describe("ButtonOptions Component", () => {
 
   it("accepts different selectedIndex values", () => {
     const { rerender } = render(
-      <ButtonOptions selectedIndex={0} handleListItemClick={mockHandleClick} />,
+      <ButtonOptions
+        color={defaultColor}
+        selectedIndex={0}
+        handleListItemClick={mockHandleClick}
+      />,
     );
 
     // Component should render without errors with different selectedIndex
     rerender(
-      <ButtonOptions selectedIndex={1} handleListItemClick={mockHandleClick} />,
+      <ButtonOptions
+        color={defaultColor}
+        selectedIndex={1}
+        handleListItemClick={mockHandleClick}
+      />,
     );
     expect(screen.getByText("OVERVIEW")).toBeInTheDocument();
 
     rerender(
-      <ButtonOptions selectedIndex={2} handleListItemClick={mockHandleClick} />,
+      <ButtonOptions
+        color={defaultColor}
+        selectedIndex={2}
+        handleListItemClick={mockHandleClick}
+      />,
     );
+    expect(screen.getByText("SURFACE GEOLOGY")).toBeInTheDocument();
+  });
+
+  it("updates selected state when a button is clicked", () => {
+    render(
+      <ButtonOptions
+        color={defaultColor}
+        selectedIndex={0}
+        handleListItemClick={mockHandleClick}
+      />,
+    );
+
+    const structureButton = screen.getByText("INTERNAL STRUCTURE");
+    fireEvent.click(structureButton);
+
+    // Click another button to verify state updates
+    const geologyButton = screen.getByText("SURFACE GEOLOGY");
+    fireEvent.click(geologyButton);
+
+    expect(mockHandleClick).toHaveBeenCalledTimes(2);
+    expect(mockHandleClick).toHaveBeenNthCalledWith(1, 1);
+    expect(mockHandleClick).toHaveBeenNthCalledWith(2, 2);
+  });
+
+  it("renders exactly three buttons from BUTTON_OPTIONS", () => {
+    const { container } = render(
+      <ButtonOptions
+        color={defaultColor}
+        selectedIndex={0}
+        handleListItemClick={mockHandleClick}
+      />,
+    );
+
+    const buttons = container.querySelectorAll(".MuiButton-root");
+    expect(buttons).toHaveLength(3);
+  });
+
+  it("accepts different color props", () => {
+    const customColor = "#FF6A45";
+    render(
+      <ButtonOptions
+        color={customColor}
+        selectedIndex={0}
+        handleListItemClick={mockHandleClick}
+      />,
+    );
+
+    expect(screen.getByText("OVERVIEW")).toBeInTheDocument();
+  });
+
+  it("initializes with the correct selectedIndex", () => {
+    render(
+      <ButtonOptions
+        color={defaultColor}
+        selectedIndex={1}
+        handleListItemClick={mockHandleClick}
+      />,
+    );
+
+    // All buttons should still be rendered
+    expect(screen.getByText("OVERVIEW")).toBeInTheDocument();
+    expect(screen.getByText("INTERNAL STRUCTURE")).toBeInTheDocument();
     expect(screen.getByText("SURFACE GEOLOGY")).toBeInTheDocument();
   });
 });

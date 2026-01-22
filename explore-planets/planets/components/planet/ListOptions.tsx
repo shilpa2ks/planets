@@ -1,30 +1,34 @@
+import { memo, useMemo } from "react";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
-import { ListOptionsProps } from "../types";
+import { SelectionOptionProps } from "../types";
 
-const ListOptions = ({
+const ListOptions = memo(({
+  color,
   selectedIndex,
   handleListItemClick,
-}: ListOptionsProps): JSX.Element => {
+}: SelectionOptionProps): JSX.Element => {
+  const listSx = useMemo(
+    () => ({
+      ".Mui-selected, .MuiListItemButton-root:hover": {
+        backgroundColor: `${color} !important`,
+      },
+      ".MuiListItemButton-root": {
+        height: "50px",
+        border: "1px solid rgba(255, 255, 255, 0.26)",
+        fontSize: ".9rem",
+        margin: "10px 0",
+        textAlign: "left",
+        padding: "1rem",
+        marginTop: "1rem",
+      },
+    }),
+    [color]
+  );
+
   return (
-    <List
-      component="nav"
-      sx={{
-        ".Mui-selected, .MuiListItemButton-root:hover": {
-          backgroundColor: "#419ebb !important",
-        },
-        ".MuiListItemButton-root": {
-          height: "50px",
-          border: "1px solid rgba(255, 255, 255, 0.26)",
-          fontSize: ".9rem",
-          margin: "10px 0",
-          textAlign: "left",
-          padding: "1rem",
-          marginTop: "1rem",
-        },
-      }}
-    >
+    <List component="nav" sx={listSx}>
       <ListItemButton
         selected={selectedIndex === 0}
         onClick={() => handleListItemClick(0)}
@@ -45,6 +49,8 @@ const ListOptions = ({
       </ListItemButton>
     </List>
   );
-};
+});
+
+ListOptions.displayName = "ListOptions";
 
 export default ListOptions;
