@@ -24,10 +24,7 @@ export interface IPlanet {
 
 export interface ListOptionsProps {
   selectedIndex: number;
-  handleListItemClick: (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    index: number,
-  ) => void;
+  handleListItemClick: (index: number) => void;
 }
 
 export interface PlanetaryStatsProps {

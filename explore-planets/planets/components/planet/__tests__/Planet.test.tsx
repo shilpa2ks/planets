@@ -27,13 +27,35 @@ jest.mock("../ListOptions", () => {
   }: any) {
     return (
       <div data-testid="list-options">
-        <button onClick={(e) => handleListItemClick(e, 0)}>Overview</button>
-        <button onClick={(e) => handleListItemClick(e, 1)}>Structure</button>
-        <button onClick={(e) => handleListItemClick(e, 2)}>Geology</button>
+        <button onClick={() => handleListItemClick(0)}>Overview</button>
+        <button onClick={() => handleListItemClick(1)}>Structure</button>
+        <button onClick={() => handleListItemClick(2)}>Geology</button>
       </div>
     );
   };
 });
+
+jest.mock("../ButtonOptions", () => {
+  return function DummyButtonOptions({
+    selectedIndex,
+    handleListItemClick,
+  }: any) {
+    return (
+      <div data-testid="button-options">
+        <button onClick={() => handleListItemClick(0)}>Overview</button>
+        <button onClick={() => handleListItemClick(1)}>Structure</button>
+        <button onClick={() => handleListItemClick(2)}>Geology</button>
+      </div>
+    );
+  };
+});
+
+// Mock useMediaQuery to control responsive behavior
+const mockUseMediaQuery = jest.fn();
+jest.mock("@mui/material/useMediaQuery", () => ({
+  __esModule: true,
+  default: () => mockUseMediaQuery(),
+}));
 
 const mockPlanet: IPlanet = {
   id: "0",
@@ -62,6 +84,15 @@ const mockPlanet: IPlanet = {
 };
 
 describe("Planet Component", () => {
+  beforeEach(() => {
+    // Default to desktop view (not tablet or below)
+    mockUseMediaQuery.mockReturnValue(false);
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   it("renders planet name", () => {
     render(<PlanetComponent planet={mockPlanet} />);
 
@@ -130,10 +161,20 @@ describe("Planet Component", () => {
     expect(images.length).toBe(2);
   });
 
-  it("renders ListOptions component", () => {
+  it("renders ListOptions component on desktop", () => {
+    mockUseMediaQuery.mockReturnValue(false);
     render(<PlanetComponent planet={mockPlanet} />);
 
     expect(screen.getByTestId("list-options")).toBeInTheDocument();
+    expect(screen.queryByTestId("button-options")).not.toBeInTheDocument();
+  });
+
+  it("renders ButtonOptions component on tablet and below", () => {
+    mockUseMediaQuery.mockReturnValue(true);
+    render(<PlanetComponent planet={mockPlanet} />);
+
+    expect(screen.getByTestId("button-options")).toBeInTheDocument();
+    expect(screen.queryByTestId("list-options")).not.toBeInTheDocument();
   });
 
   it("updates source link when changing content", () => {
@@ -147,5 +188,29 @@ describe("Planet Component", () => {
 
     link = screen.getByText("Wikipedia");
     expect(link).toHaveAttribute("href", mockPlanet.structure.source);
+  });
+
+  it("handles click from ButtonOptions with undefined event", () => {
+    mockUseMediaQuery.mockReturnValue(true);
+    render(<PlanetComponent planet={mockPlanet} />);
+
+    const structureButton = screen.getByText("Structure");
+    fireEvent.click(structureButton);
+
+    expect(
+      screen.getByText("Mercury has a solid silicate crust."),
+    ).toBeInTheDocument();
+  });
+
+  it("shows geology content when geology button is clicked on tablet", () => {
+    mockUseMediaQuery.mockReturnValue(true);
+    render(<PlanetComponent planet={mockPlanet} />);
+
+    const geologyButton = screen.getByText("Geology");
+    fireEvent.click(geologyButton);
+
+    expect(
+      screen.getByText("Mercury's surface is similar to the Moon."),
+    ).toBeInTheDocument();
   });
 });

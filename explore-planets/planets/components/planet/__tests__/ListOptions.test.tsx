@@ -11,7 +11,7 @@ describe("ListOptions Component", () => {
 
   it("renders all three list item buttons", () => {
     render(
-      <ListOptions selectedIndex={0} handleListItemClick={mockHandleClick} />
+      <ListOptions selectedIndex={0} handleListItemClick={mockHandleClick} />,
     );
 
     expect(screen.getByText("OVERVIEW")).toBeInTheDocument();
@@ -21,7 +21,7 @@ describe("ListOptions Component", () => {
 
   it("marks the correct index as selected", () => {
     const { container } = render(
-      <ListOptions selectedIndex={1} handleListItemClick={mockHandleClick} />
+      <ListOptions selectedIndex={1} handleListItemClick={mockHandleClick} />,
     );
 
     const buttons = container.querySelectorAll('[role="button"]');
@@ -30,7 +30,7 @@ describe("ListOptions Component", () => {
 
   it("calls handleListItemClick when a button is clicked", () => {
     render(
-      <ListOptions selectedIndex={0} handleListItemClick={mockHandleClick} />
+      <ListOptions selectedIndex={0} handleListItemClick={mockHandleClick} />,
     );
 
     const overviewButton = screen
@@ -39,12 +39,12 @@ describe("ListOptions Component", () => {
     fireEvent.click(overviewButton!);
 
     expect(mockHandleClick).toHaveBeenCalledTimes(1);
-    expect(mockHandleClick).toHaveBeenCalledWith(expect.any(Object), 0);
+    expect(mockHandleClick).toHaveBeenCalledWith(0);
   });
 
   it("calls handleListItemClick with correct index for geology", () => {
     render(
-      <ListOptions selectedIndex={0} handleListItemClick={mockHandleClick} />
+      <ListOptions selectedIndex={0} handleListItemClick={mockHandleClick} />,
     );
 
     const geologyButton = screen
@@ -52,19 +52,19 @@ describe("ListOptions Component", () => {
       .closest('[role="button"]');
     fireEvent.click(geologyButton!);
 
-    expect(mockHandleClick).toHaveBeenCalledWith(expect.any(Object), 2);
+    expect(mockHandleClick).toHaveBeenCalledWith(2);
   });
 
   it("updates selection when selectedIndex prop changes", () => {
     const { container, rerender } = render(
-      <ListOptions selectedIndex={0} handleListItemClick={mockHandleClick} />
+      <ListOptions selectedIndex={0} handleListItemClick={mockHandleClick} />,
     );
 
     let buttons = container.querySelectorAll('[role="button"]');
     expect(buttons[0]).toHaveClass("Mui-selected");
 
     rerender(
-      <ListOptions selectedIndex={2} handleListItemClick={mockHandleClick} />
+      <ListOptions selectedIndex={2} handleListItemClick={mockHandleClick} />,
     );
 
     buttons = container.querySelectorAll('[role="button"]');

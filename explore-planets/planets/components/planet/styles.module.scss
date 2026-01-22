@@ -1,5 +1,100 @@
-.imageStyle {
+@import "../styles/variables.scss";
+
+.container {
+  margin: 32px 0;
+  height: 100vh;
+}
+
+.imagePrimary {
+  width: 300px;
+  height: 300px;
+}
+
+.imageSecondary {
   width: 50%;
   padding: 0;
-  transform: translate(0%, -50%);
+  transform: translate(50%, -50%);
+}
+
+.imageContainer {
+  height: 552px !important;
+}
+
+.buttonGroup {
+  display: "flex";
+  flex-direction: "column";
+  align-items: "center";
+  margin: 15px;
+}
+
+@media (min-width: $mdBreakpoint) {
+  .planetContentBody {
+    height: 145px;
+  }
+}
+
+@media (min-width: $smBreakpoint) and (max-width: calc($mdBreakpoint - 1px)) {
+  .imagePrimary {
+    padding: 20px;
+    align-self: center;
+  }
+
+  .imageSecondary {
+    width: 15%;
+    height: 80px !important;
+    margin: 0 !important;
+    align-self: center;
+    transform: translate(0%, -50%);
+  }
+
+  .imageContainer {
+    height: 380px !important;
+  }
+
+  .planetContent {
+    display: flex;
+    align-self: center;
+  }
+
+  .summaryContainer {
+    margin: 0 !important;
+  }
+
+  .planetContentBody {
+    height: 75px;
+  }
+}
+
+@media (max-width: $mdBreakpoint) {
+  .imagePrimary {
+    padding: 20px;
+    align-self: center;
+  }
+
+  .imageSecondary {
+    width: 15%;
+    height: 80px !important;
+    margin: 0 !important;
+    align-self: center;
+    transform: translate(0%, -50%);
+  }
+
+  .imageContainer {
+    height: 380px !important;
+  }
+
+  .planetContent {
+    display: flex;
+    align-self: center;
+    text-align: center;
+    margin-top: 10px;
+  }
+
+  .summaryContainer {
+    margin: 0 !important;
+  }
+
+  .planetContentBody {
+    height: 100px;
+  }
 }

@@ -1,0 +1,32 @@
+@import "../styles/variables.scss";
+
+.planetStats {
+  border: 1px solid rgba(255, 255, 255, 0.26);
+  text-align: left;
+  width: 13vw;
+  padding: 1rem;
+}
+
+@media (min-width: $smBreakpoint) {
+  .planetStats {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 10px;
+    width: 30%;
+  }
+}
+
+@media (max-width: calc($smBreakpoint - 1px)) {
+  .planetStats {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    width: 100%;
+  }
+
+  .planetName {
+    display: flex;
+    align-self: center;
+  }
+}

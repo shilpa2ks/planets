@@ -27,19 +27,19 @@ const ListOptions = ({
     >
       <ListItemButton
         selected={selectedIndex === 0}
-        onClick={(event) => handleListItemClick(event, 0)}
+        onClick={() => handleListItemClick(0)}
       >
         <ListItemText primary="OVERVIEW" />
       </ListItemButton>
       <ListItemButton
         selected={selectedIndex === 1}
-        onClick={(event) => handleListItemClick(event, 1)}
+        onClick={() => handleListItemClick(1)}
       >
         <ListItemText primary="INTERNAL STRUCTURE" />
       </ListItemButton>
       <ListItemButton
         selected={selectedIndex === 2}
-        onClick={(event) => handleListItemClick(event, 2)}
+        onClick={() => handleListItemClick(2)}
       >
         <ListItemText primary="SURFACE GEOLOGY" />
       </ListItemButton>
