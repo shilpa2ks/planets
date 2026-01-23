@@ -6,12 +6,21 @@ body {
   color: #ffffff;
 }
 
+html {
+  /* Enable smooth touch scrolling on mobile */
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+
 body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* Ensure body can scroll naturally */
+  overflow-y: auto;
+  touch-action: pan-y;
 }
 
 * {

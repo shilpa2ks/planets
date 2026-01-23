@@ -2,7 +2,8 @@
 
 .container {
   margin: 32px 0;
-  height: 100vh;
+  min-height: 100vh;
+  min-height: 100dvh; /* Dynamic viewport height - better mobile support */
 }
 
 .imagePrimary {
