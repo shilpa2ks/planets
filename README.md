@@ -2,12 +2,24 @@
 
 ## Description
 
-Check out all of the planets and some cool facts about each one at: https://planet-facts-pi.vercel.app/
+Explore the planets and learn key facts about each one at: https://planet-facts-pi.vercel.app/
 
-## Tech
+## Tech Stack
 
-- React
-- Next.js
-- SCSS
+- Next.js 14 (App Router)
+- React 18
 - TypeScript
-- Material UI
+- MUI (Material UI) with Emotion + styled-components
+- Sass/SCSS modules
+- Jest + React Testing Library
+- ESLint
+
+## Features
+
+- Dynamic planet routes via `/[slug]`
+- Responsive navigation with desktop links and a mobile drawer menu
+- Interactive content views (Overview, Internal Structure, Surface Geology)
+- Planet imagery with geology overlay
+- Planetary stats (rotation, revolution, radius, average temperature)
+- Source links to Wikipedia for each section
+- Optimized images with Next/Image
