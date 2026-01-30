@@ -7,6 +7,7 @@ Check out all of the planets and some cool facts about each one at: https://plan
 ## Tech
 
 - React
-- JavaScript
+- Next.js
 - SCSS
-- Bootstrap
+- TypeScript
+- Material UI
